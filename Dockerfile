@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jdk-alpine AS build
 WORKDIR /app
-COPY src/main/java/com/anonimo/api_demo .
+COPY . .
 RUN ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
