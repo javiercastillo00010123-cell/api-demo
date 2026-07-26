@@ -1,5 +1,6 @@
 package com.anonimo.api_demo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+    @Value("${APP_USER:usuario}")
+    private String appUser;
+
+    @Value("${APP_PASSWORD:cambiar123}")
+    private String appPassword;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -21,8 +28,8 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails user = User.builder()
-                .username("usuario")
-                .password(passwordEncoder.encode("portfolio2026"))
+                .username(appUser)
+                .password(passwordEncoder.encode(appPassword))
                 .roles("USER")
                 .build();
         return new InMemoryUserDetailsManager(user);
